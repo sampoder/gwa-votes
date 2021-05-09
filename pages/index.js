@@ -72,7 +72,7 @@ const Index = () => {
           <Heading
           as="h1"
             sx={{
-              fontSize: ["4em", "6em", "9em"],
+              fontSize: ["4em", "6em", "8em"],
               marginBlockStart: "0em",
               marginBlockEnd: "0em",
               fontWeight: "800",
@@ -305,6 +305,7 @@ const Index = () => {
 };
 
 export async function getServerSideProps({ req, res }) {
+  
   const { user } = await supabase.auth.api.getUserByCookie(req);
 
   let powerfulSupabase = createClient(
