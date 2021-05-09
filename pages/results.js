@@ -9,7 +9,6 @@ export default function Results({
   presidentWinner,
   notAuthed,
 }) {
-  console.log(candidates);
   if (notAuthed) {
     return (
       <Box
@@ -273,6 +272,29 @@ export async function getServerSideProps({ req, res, query = {} }) {
 
   if (query["pwd"] == process.env.RESULTS_PW) {
     let candidates = rawCandidates;
+    console.log(candidates)
+    candidates.vice = candidates.vice.map(x => ({
+      ...x,
+      votes: 0,
+      votes_6: 0,
+      votes_7: 0,
+      votes_8: 0,
+      votes_9: 0,
+      votes_10: 0,
+      votes_11: 0,
+      votes_12: 0,
+    }))
+    candidates.president = candidates.president.map(x => ({
+      ...x,
+      votes: 0,
+      votes_6: 0,
+      votes_7: 0,
+      votes_8: 0,
+      votes_9: 0,
+      votes_10: 0,
+      votes_11: 0,
+      votes_12: 0,
+    }))
     let powerfulSupabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.SUPABASE_SECRET_KEY
@@ -327,14 +349,6 @@ export async function getServerSideProps({ req, res, query = {} }) {
         candidates.president[x.president].votes_6 += 1;
       }
     });
-    console.log(
-      Math.max.apply(
-        Math,
-        candidates.vice.map(function (o) {
-          return o.votes;
-        })
-      )
-    );
     return {
       props: {
         candidates,
