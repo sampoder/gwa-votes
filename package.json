@@ -1,16 +1,19 @@
 {
-  "name": "create-next-app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "with-supabase-auth",
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "@geist-ui/react": "latest",
-    "next": "9.4.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
-  }
+    "@supabase/supabase-js": "^1.2.1",
+    "@supabase/ui": "^0.6.1",
+    "next": "latest",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "swr": "0.2.3",
+    "theme-ui": "^0.7.5"
+  },
+  "license": "MIT"
 }
