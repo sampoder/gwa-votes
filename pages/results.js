@@ -269,9 +269,9 @@ export default function Results({
   );
 }
 
-export async function getServerSideProps({ req, res }) {
-  console.log(req.__NEXT_INIT_QUERY);
-  if (req.__NEXT_INIT_QUERY["pwd"] == process.env.RESULTS_PW) {
+export async function getServerSideProps({ req, res, query = {} }) {
+
+  if (query["pwd"] == process.env.RESULTS_PW) {
     let candidates = rawCandidates;
     let powerfulSupabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
