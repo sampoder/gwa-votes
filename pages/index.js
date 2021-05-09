@@ -3,9 +3,11 @@ import useSWR from "swr";
 import { Auth } from "@supabase/ui";
 import { supabase } from "../utils/initSupabase";
 import { useEffect, useState } from "react";
-import { Grid } from "theme-ui";
+import { Grid,Box, Heading } from "theme-ui";
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
+import candidates from "../lib/candidates";
+
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -21,7 +23,7 @@ const Index = () => {
     fetcher
   );
   const [authView, setAuthView] = useState("sign_in");
-  const router = useRouter()
+  const router = useRouter();
   if (typeof data != "undefined") {
     if (data.votes[0].vice != null && data.votes[0].president != null) {
       router.push("/thanks");
@@ -53,22 +55,24 @@ const Index = () => {
   const View = () => {
     if (!user)
       return (
-        <div style={{ padding: "2em", paddingRight: "1em" }}>
-          <h1
-            style={{
+        <Box sx={{ padding: ["0.6em","2em"], paddingRight: "1em" }}>
+          <Heading as="h1"
+            sx={{
               fontWeight: "600",
               marginBlockStart: "0em",
               marginBlockEnd: "0em",
-              marginLeft: "10px",
+              marginLeft: ["0px","10px"],
+              maxWidth: '85%',
               textShadow:
                 "0 1px 2px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.125)",
             }}
           >
             Shape the future of your school
-          </h1>
-          <h1
-            style={{
-              fontSize: "9em",
+          </Heading>
+          <Heading
+          as="h1"
+            sx={{
+              fontSize: ["4em", "6em", "9em"],
               marginBlockStart: "0em",
               marginBlockEnd: "0em",
               fontWeight: "800",
@@ -76,7 +80,7 @@ const Index = () => {
             }}
           >
             Student Council Elections 2021
-          </h1>
+          </Heading>
           <h2
             style={{
               padding: "10px",
@@ -94,7 +98,7 @@ const Index = () => {
           >
             Verify Your Identity
           </h2>
-        </div>
+        </Box>
       );
 
     useEffect(() => {
@@ -109,7 +113,7 @@ const Index = () => {
     return (
       <>
         {user && (
-          <div style={{ padding: "2em", paddingRight: "1em" }}>
+          <div style={{ padding: "2em", paddingRight: "2em" }}>
             <div style={{ display: "flex" }}>
               <h2
                 style={{
@@ -138,47 +142,52 @@ const Index = () => {
                 Choose Your {page == "vice" ? "Vice-President" : "President"}
               </h2>
             </div>
-            <Grid columns={3} sx={{ maxWidth: "1200px", width: "100vw" }}>
-              <div
-                onClick={() => {
-                  if (page == "vice") {
-                    if (vice == 1) {
-                      setVice(null);
-                    } else {
-                      setVice(1);
+            <Grid columns={[1, 2, 4]} sx={{ maxWidth: "1200px", width: ["100%", "120%", '100vw'] }}>
+              {(page == "vice" ? candidates.vice : candidates.president).map((x) => (
+                <Box
+                  onClick={() => {
+                    if (page == "vice") {
+                      if (vice == x.id) {
+                        setVice(null);
+                      } else {
+                        setVice(x.id);
+                      }
                     }
-                  }
-                  if (page == "president") {
-                    if (president == 1) {
-                      setPresident(null);
-                    } else {
-                      setPresident(1);
+                    if (page == "president") {
+                      if (president == x.id) {
+                        setPresident(null);
+                      } else {
+                        setPresident(x.id);
+                      }
                     }
-                  }
-                }}
-                style={{
-                  background: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7175245098039216) 66%, rgba(0,0,0,1) 90%), url(https://github.com/sampoder.png)`,
-                  width: "100%",
-                  backgroundPosition: "center",
-                  paddingTop: "100%",
-                  height: "100px",
-                  position: "relative",
-                  outline:
-                    (page == "president" && president == 1) ||
-                    (page == "vice" && vice == 1)
-                      ? "4px solid #97d700"
-                      : "none",
-                  boxShadow:
-                    "0 1px 2px rgba(0, 0, 0, 0.0625), 0 8px 12px rgba(0, 0, 0, 0.125)",
-                }}
-              >
-                <div style={{ position: "absolute", bottom: 2, left: "24px" }}>
-                  <h1 style={{ marginBlockEnd: "0.1em" }}>Sam Poder</h1>
-                  <p style={{ marginBlockStart: "0.3em" }}>
-                    Keeping everyone accountable.
-                  </p>
-                </div>
-              </div>
+                  }}
+                  sx={{
+                    background: `linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7175245098039216) 66%, rgba(0,0,0,1) 90%), url(${x.photo})`,
+                    width: "100%",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    paddingTop: "100%",
+                    height: "100px",
+                    position: "relative",
+                    outline:
+                      (page == "president" && president == x.id) ||
+                      (page == "vice" && vice == x.id)
+                        ? "4px solid #97d700"
+                        : "none",
+                    boxShadow:
+                      "0 1px 2px rgba(0, 0, 0, 0.0625), 0 8px 12px rgba(0, 0, 0, 0.125)",
+                  }}
+                >
+                  <Box
+                    sx={{ position: "absolute", bottom: 2, left: ["8px","24px"] }}
+                  >
+                    <h1 style={{ marginBlockEnd: "0.1em" }}>{x.name}</h1>
+                    <p style={{ marginBlockStart: "0.3em" }}>
+                      Keeping everyone accountable.
+                    </p>
+                  </Box>
+                </Box>
+              ))}
             </Grid>
             <div style={{ display: "flex" }}>
               <h2
@@ -274,7 +283,7 @@ const Index = () => {
       style={{
         background:
           "linear-gradient(180deg, rgba(55,114,190,0.2) 0%, rgba(55,114,190,0.7175245098039216) 66%, rgba(55,114,190,1) 90%), url(https://cloud-4if0t18se-hack-club-bot.vercel.app/0ezgif-7-fd300583c741.gif)",
-        height: "100vh",
+        minHeight: "100vh",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100vw",
@@ -284,8 +293,7 @@ const Index = () => {
       <div
         style={{
           maxWidth: "1200px",
-
-          height: "100vh",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
         }}
@@ -316,16 +324,15 @@ export async function getServerSideProps({ req, res }) {
       .eq("id", user.id);
     //console.log(data);
     //console.log(error);
-    
+
     // If no user, redirect to index.
-    
-    if(typeof data[0].vice != "undefined"){
+
+    if (typeof data[0].vice != "undefined") {
       res.writeHead(301, {
-        Location: "/thanks"
+        Location: "/thanks",
       });
       res.end();
     }
-    
   }
 
   // If there is a user, return it.

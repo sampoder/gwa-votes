@@ -10,7 +10,7 @@ export default function MyApp({ Component, pageProps }) {
   let description = "Make your voice count and vote in these elections."
   let image = "https://cloud-i685e8ajt-hack-club-bot.vercel.app/0stucoogg.png"
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <Head>
         <title>{title}</title>
         <meta property="og:title" content={title} />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, Typography, Space } from "@supabase/ui";
 import { supabase } from "../utils/initSupabase";
+import { Grid, Box, Heading } from "theme-ui";
 
 export default function Profile({ user }) {
   return (
@@ -24,22 +25,25 @@ export default function Profile({ user }) {
           alignItems: "center",
         }}
       >
-        <div style={{ padding: "2em", paddingRight: "1em" }}>
-          <h1
-            style={{
+        <Box sx={{ padding: ["0.6em", "2em"], paddingRight: "1em" }}>
+          <Heading
+            as="h1"
+            sx={{
               fontWeight: "600",
               marginBlockStart: "0em",
               marginBlockEnd: "0em",
-              marginLeft: "10px",
+              marginLeft: ["0px", "10px"],
+              maxWidth: "85%",
               textShadow:
                 "0 1px 2px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.125)",
             }}
           >
             Student Council Elections 2021
-          </h1>
-          <h1
-            style={{
-              fontSize: "9em",
+          </Heading>
+          <Heading
+            as="h1"
+            sx={{
+              fontSize: ["4em", "6em", "9em"],
               marginBlockStart: "0em",
               marginBlockEnd: "0em",
               fontWeight: "800",
@@ -47,10 +51,11 @@ export default function Profile({ user }) {
             }}
           >
             Thank you for voting
-          </h1>
-          <h2
-            style={{
+          </Heading>
+          <Heading
+            sx={{
               padding: "10px",
+              fontSize: ["0.9em", "1.3em"],
               marginBlockStart: "0.4em",
               backgroundColor: "rgba(34, 74, 125,1)",
               boxShadow:
@@ -58,9 +63,10 @@ export default function Profile({ user }) {
               width: "fit-content",
             }}
           >
-            Questions or concerns? Contact 23samuel.p@gwa.edu.sg
-          </h2>
-        </div>
+            Questions or concerns? Contact{" "}
+            <a href="mailto:23samuel.p@gwa.edu.sg" style={{color: 'white', textDecoration: 'none'}}>23samuel.p@gwa.edu.sg</a>
+          </Heading>
+        </Box>
       </div>
     </div>
   );
