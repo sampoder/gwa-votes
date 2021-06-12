@@ -89,6 +89,7 @@ const Index = () => {
               boxShadow:
                 "0 1px 2px rgba(0, 0, 0, 0.0625), 0 8px 12px rgba(0, 0, 0, 0.125)",
               width: "fit-content",
+              cursor: 'pointer'
             }}
             onClick={() =>
               supabase.auth.signIn({
