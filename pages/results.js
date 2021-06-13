@@ -24,8 +24,13 @@ export default function Results({
           Student Council Election Results
         </Heading>
         <form action="/results">
-          <Input id="pwd" name="pwd" placeholder="Enter Password" sx={{ maxWidth: '600px'}} />
-          <Button sx={{ border: "1px solid white", mt: '12px' }}>Enter</Button>
+          <Input
+            id="pwd"
+            name="pwd"
+            placeholder="Enter Password"
+            sx={{ maxWidth: "600px" }}
+          />
+          <Button sx={{ border: "1px solid white", mt: "12px" }}>Enter</Button>
         </form>
       </Box>
     );
@@ -50,7 +55,9 @@ export default function Results({
           as="a"
           href="/results"
         >
-          <Text sx={{ transform: 'translateY(-2px)', display: 'inline-block'}}>{"<"}</Text>
+          <Text sx={{ transform: "translateY(-2px)", display: "inline-block" }}>
+            {"<"}
+          </Text>
         </Button>{" "}
         Student Council Election Results
       </Heading>
@@ -269,11 +276,10 @@ export default function Results({
 }
 
 export async function getServerSideProps({ req, res, query = {} }) {
-
   if (query["pwd"] == process.env.RESULTS_PW) {
     let candidates = rawCandidates;
-    console.log(candidates)
-    candidates.vice = candidates.vice.map(x => ({
+    console.log(candidates);
+    candidates.vice = candidates.vice.map((x) => ({
       ...x,
       votes: 0,
       votes_6: 0,
@@ -283,8 +289,8 @@ export async function getServerSideProps({ req, res, query = {} }) {
       votes_10: 0,
       votes_11: 0,
       votes_12: 0,
-    }))
-    candidates.president = candidates.president.map(x => ({
+    }));
+    candidates.president = candidates.president.map((x) => ({
       ...x,
       votes: 0,
       votes_6: 0,
@@ -294,7 +300,7 @@ export async function getServerSideProps({ req, res, query = {} }) {
       votes_10: 0,
       votes_11: 0,
       votes_12: 0,
-    }))
+    }));
     let powerfulSupabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.SUPABASE_SECRET_KEY
@@ -311,42 +317,45 @@ export async function getServerSideProps({ req, res, query = {} }) {
     data.map((x) => {
       x.vice = x.vice - 1;
       x.president = x.president - 1;
-      if (typeof candidates.vice[x.vice].votes != "undefined") {
-        candidates.vice[x.vice].votes += 1;
-      } else {
-        candidates.vice[x.vice].votes = 1;
-      }
-      if (typeof candidates.president[x.president].votes != "undefined") {
-        candidates.president[x.president].votes += 1;
-      } else {
-        candidates.president[x.president].votes = 1;
-      }
-      if (x.email.includes(21)) {
-        candidates.vice[x.vice].votes_12 += 1;
-      }
-      if (x.email.includes(22)) {
-        candidates.vice[x.vice].votes_11 += 1;
-        candidates.president[x.president].votes_11 += 1;
-      }
-      if (x.email.includes(23)) {
-        candidates.vice[x.vice].votes_10 += 1;
-        candidates.president[x.president].votes_10 += 1;
-      }
-      if (x.email.includes(24)) {
-        candidates.vice[x.vice].votes_9 += 1;
-        candidates.president[x.president].votes_9 += 1;
-      }
-      if (x.email.includes(25)) {
-        candidates.vice[x.vice].votes_8 += 1;
-        candidates.president[x.president].votes_8 += 1;
-      }
-      if (x.email.includes(26)) {
-        candidates.vice[x.vice].votes_7 += 1;
-        candidates.president[x.president].votes_7 += 1;
-      }
-      if (x.email.includes(27)) {
-        candidates.vice[x.vice].votes_6 += 1;
-        candidates.president[x.president].votes_6 += 1;
+      if (typeof candidates.vice[x.vice] != "undefined") {
+        if (typeof candidates.vice[x.vice].votes != "undefined") {
+          candidates.vice[x.vice].votes += 1;
+        } else {
+          candidates.vice[x.vice].votes = 1;
+        }
+
+        if (typeof candidates.president[x.president].votes != "undefined") {
+          candidates.president[x.president].votes += 1;
+        } else {
+          candidates.president[x.president].votes = 1;
+        }
+        if (x.email.includes(21)) {
+          candidates.vice[x.vice].votes_12 += 1;
+        }
+        if (x.email.includes(22)) {
+          candidates.vice[x.vice].votes_11 += 1;
+          candidates.president[x.president].votes_11 += 1;
+        }
+        if (x.email.includes(23)) {
+          candidates.vice[x.vice].votes_10 += 1;
+          candidates.president[x.president].votes_10 += 1;
+        }
+        if (x.email.includes(24)) {
+          candidates.vice[x.vice].votes_9 += 1;
+          candidates.president[x.president].votes_9 += 1;
+        }
+        if (x.email.includes(25)) {
+          candidates.vice[x.vice].votes_8 += 1;
+          candidates.president[x.president].votes_8 += 1;
+        }
+        if (x.email.includes(26)) {
+          candidates.vice[x.vice].votes_7 += 1;
+          candidates.president[x.president].votes_7 += 1;
+        }
+        if (x.email.includes(27)) {
+          candidates.vice[x.vice].votes_6 += 1;
+          candidates.president[x.president].votes_6 += 1;
+        }
       }
     });
     return {
