@@ -184,7 +184,7 @@ const Index = () => {
                   >
                     <h1 style={{ marginBlockEnd: "0.1em" }}>{x.name}</h1>
                     <p style={{ marginBlockStart: "0.3em" }}>
-                      Keeping everyone accountable.
+                      {x.slogan}
                     </p>
                   </Box>
                 </Box>
