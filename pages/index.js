@@ -53,7 +53,7 @@ const Index = () => {
   }, []);
 
   const View = () => {
-  
+    if (!user)
       return (
         <Box sx={{ padding: ["0.6em","2em"], paddingRight: "1em" }}>
           <Heading as="h1"
@@ -91,8 +91,13 @@ const Index = () => {
               width: "fit-content",
               cursor: 'pointer'
             }}
+            onClick={() =>
+              supabase.auth.signIn({
+                provider: "google",
+              })
+            }
           >
-            Voting has now closed, thank you.
+            Verify Your Identity
           </h2>
         </Box>
       );
